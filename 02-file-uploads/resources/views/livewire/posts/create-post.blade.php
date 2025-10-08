@@ -1,6 +1,6 @@
 <div>
     {{-- Because she competes with no one, no one can compete with her. --}}
-    <form wire:submit="save">
+    <form wire:submit="save" enctype="multipart/form-data" >
         <label for="">Title</label>
         <input type="text" wire:model="form.title" id="" class="border @error('form.title') border-red-500 @enderror px-2 py-1">
         @error('form.title')
@@ -14,6 +14,15 @@
         @error('form.content')
             <span class="text-red-500">  {{ $message }}</span>
         @enderror
+        <br>
+         @if ($form->image)
+            <img  src="{{ $form->image->temporaryUrl() }}" >
+        @endif
+        <input type="file" wire:model="form.image" id="">
+        @error('form.image')
+            <span class="text-red-500">{{ $message }}</span>
+        @enderror
+        
         <br>
         <button 
         type="submit"

@@ -12,6 +12,8 @@ class CreatePost extends Component
     
     public PostForm $form;
 
+    
+
     public function render()
     {
         return view('livewire.posts.create-post');
