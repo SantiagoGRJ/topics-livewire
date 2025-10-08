@@ -16,11 +16,15 @@ class PostForm extends Form
 
     public $image;
 
-    public $originalFileName;
-
-    public $modifyName;
-
     public $date;
+
+    public function setPost(Post $post)
+    {
+        $this->post=$post;
+        $this->title=$post->title;
+        $this->content=$post->content;
+        $this->image=$post->image;
+    }
 
     public function rules() : array
     {
@@ -34,14 +38,28 @@ class PostForm extends Form
     public function store()
     {
         $this->validate();
-        $this->originalFileName=$this->image->getClientOriginalName();
-        $this->modifyName=$this->generateFileName($this->originalFileName);
-        $this->image->storeAs(path:'photos',name:$this->modifyName);
+        $modifyName=$this->generateFileName($this->image->getClientOriginalName());
+        $this->image->storeAs(path:'photos',name:$modifyName);
         Post::create([
             'title'       => $this->title,       
             'content' => $this->content,
-            'image'       => $this->modifyName,     
+            'image'       => $modifyName,     
         ]);
+
+    }
+
+    public function update() : Post
+    {
+        $this->validate();
+        $modifyName=$this->generateFileName($this->image->getClientOriginalName());
+        $this->image->storeAs(path:'photos',name:$modifyName);
+        $updatePost = $this->post->update([
+            'title' => $this->title,
+            'content' => $this->content,
+            'image' => $modifyName
+        ]);
+
+        return $this->post;
 
     }
 
