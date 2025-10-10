@@ -6,6 +6,8 @@ use App\Models\Post;
 use Illuminate\Validation\Rule;
 use Livewire\Form;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
+
 class PostForm extends Form
 {
     
@@ -51,6 +53,7 @@ class PostForm extends Form
     public function update() : Post
     {
         $this->validate();
+        Storage::delete('photos/'.$this->post->image);
         $modifyName=$this->generateFileName($this->image->getClientOriginalName());
         $this->image->storeAs(path:'photos',name:$modifyName);
         $updatePost = $this->post->update([
@@ -59,7 +62,7 @@ class PostForm extends Form
             'image' => $modifyName
         ]);
 
-        return $this->post;
+         return $this->post;
 
     }
 
