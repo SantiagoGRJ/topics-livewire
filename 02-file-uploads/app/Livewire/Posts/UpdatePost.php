@@ -4,6 +4,8 @@ namespace App\Livewire\Posts;
 
 use App\Livewire\Forms\PostForm;
 use App\Models\Post;
+use Illuminate\Contracts\Cache\Store;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -20,7 +22,8 @@ class UpdatePost extends Component
 
     public function save()
     {
-     $this->form->update();
+        
+             $this->form->update();
 
         $this->redirect(IndexPost::class);
     }
