@@ -53,16 +53,39 @@ class PostForm extends Form
     public function update() : Post
     {
         $this->validate();
+<<<<<<< HEAD
         Storage::delete('photos/'.$this->post->image);
         $modifyName=$this->generateFileName($this->image->getClientOriginalName());
         $this->image->storeAs(path:'photos',name:$modifyName);
         $updatePost = $this->post->update([
+=======
+
+        if($this->image && !is_string($this->image)){
+            if(filled($this->post->image) && Storage::exists('photos/'.$this->post->image)){
+                Storage::delete('photos/'.$this->post->image);
+            }
+
+            
+            $modifyName=$this->generateFileName($this->image->getClientOriginalName());
+            $this->image->storeAs(path:'photos',name:$modifyName);
+            $this->post->update([
+                'title' => $this->title,
+                'content' => $this->content,
+                'image' => $modifyName
+            ]);
+        }
+        $this->post->update([
+>>>>>>> e90c86c528164e424b56ff2efa0da417b6c91600
             'title' => $this->title,
-            'content' => $this->content,
-            'image' => $modifyName
+            'content' => $this->content
         ]);
 
+<<<<<<< HEAD
          return $this->post;
+=======
+
+        return $this->post;
+>>>>>>> e90c86c528164e424b56ff2efa0da417b6c91600
 
     }
 
