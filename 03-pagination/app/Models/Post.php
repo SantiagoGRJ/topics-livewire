@@ -23,6 +23,6 @@ class Post extends Model
         ],
         'LIKE',
         "%".$search."%"
-    );
+    )->paginate(10);
     }
 }
