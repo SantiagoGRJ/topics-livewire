@@ -8,7 +8,7 @@
 
     <ul>
         @foreach ($posts as $post)
-            <li wire:key="{{ $post->id }}"> {{ $post->title }} </li>
+            <li wire:key="{{ $post->id }}"> {{$post->id }} - {{$post->title }} </li>
         @endforeach
     </ul>
 </div>
